@@ -1,0 +1,11 @@
+@import url("styles.css");
+
+/* Preview-only background image treatment. */
+body::before {
+    background-image:
+        linear-gradient(rgba(247, 247, 242, 0.66), rgba(247, 247, 242, 0.88)),
+        url("redwoods-background.png");
+    background-position: center;
+    background-size: cover;
+    opacity: 0.95;
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Habits Analysis</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <p class="project-nav"><a href="../project8.html" title="Return to Lorissa Hughes resume">Back to Resume</a></p>
+        <h1>Student Habits Analysis</h1>
+        <p class="subtitle">A Python and pandas project comparing student habits with academic performance.</p>
+    </header>
+
+    <main class="project-page">
+        <section>
+            <h2>About the Project</h2>
+            <p>
+                This notebook analyzes a Kaggle dataset with 1,000 student records and 16
+                variables, including study time, sleep, attendance, internet quality, and exam
+                scores. The analysis focuses on how study habits relate to performance.
+            </p>
+        </section>
+
+        <section>
+            <h2>Featured Code</h2>
+            <h3>Cleaning Missing Values</h3>
+            <p>
+                The parental education column had missing values, so those rows were removed
+                before calculating results.
+            </p>
+            <div class="result-bubble">
+                <pre><code>df.dropna(subset=['parental_education_level'], inplace=True)
+df.isnull().sum()</code></pre>
+                <p class="result-line">Remaining missing values after cleaning: 0</p>
+            </div>
+
+            <h3>Vectorized Filtering</h3>
+            <p>
+                Pandas conditions evaluated the full study-hours column at once, making it
+                easy to count and compare groups of students.
+            </p>
+            <div class="result-bubble">
+                <pre><code>count_over_6 = (df['study_hours_per_day'] > 6).sum()
+percentage_more_than_6_hours = (count_over_6 / total_students) * 100</code></pre>
+                <p class="result-line">Students studying more than 6 hours/day: 40</p>
+                <p class="result-line">Percentage studying more than 6 hours/day: 4.40%</p>
+            </div>
+
+            <h3>Score Comparison</h3>
+            <p>
+                This code uses vectorized pandas filtering to compare average exam scores
+                between students who study more than five hours per day and those who study
+                five hours or less.
+            </p>
+            <pre class="code-sample"><code>average_exam_score_more_than_5 = df[df['study_hours_per_day'] > 5]['exam_score'].mean()
+average_exam_score_5_or_less = df[df['study_hours_per_day'] <= 5]['exam_score'].mean()
+
+print(f"Average exam score for students studying more than 5 hours/day: {average_exam_score_more_than_5:.2f}")
+print(f"Average exam score for students studying 5 hours/day or less: {average_exam_score_5_or_less:.2f}")</code></pre>
+        </section>
+
+        <section>
+            <h2>Key Takeaway</h2>
+            <h3>More Study Time Was Linked to Higher Scores</h3>
+            <p>
+                Students who studied more than five hours per day had a much higher average
+                exam score than students who studied five hours or less.
+            </p>
+            <div class="result-bubble">
+                <p class="result-line">More than 5 hours/day: 91.12</p>
+                <p class="result-line">5 hours/day or less: 65.67</p>
+            </div>
+            <p class="project-actions">
+                <a class="button" href="project7-full-notebook.html" title="Open the full Student Habits Analysis notebook with outputs">Open Full Notebook</a>
+                <a class="button" href="project7-2.ipynb" title="Open the raw Student Habits Analysis notebook file">Raw Notebook</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lorissa Hughes. Featured project for CS110.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turtle Graphics Camping Scene</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <p class="project-nav"><a href="../project8.html" title="Return to Lorissa Hughes resume">Back to Resume</a></p>
+        <h1>Turtle Graphics Camping Scene</h1>
+        <p class="subtitle">A Python Turtle graphics project focused on refactoring, reusable functions, and adding complexity through repeated scene elements.</p>
+    </header>
+
+    <main class="project-page">
+        <section>
+            <h2>About the Project</h2>
+            <p>
+                This project uses Python to create a camping scene with Turtle graphics. The
+                original drawing steps were refactored into helper functions so repeated
+                elements, such as flowers, clouds, and tents, could be added more efficiently
+                and adjusted with fewer changes.
+            </p>
+            <p>
+                The final version shows generalizing functions, adding complexity, and using
+                loops to place multiple related objects across the scene.
+            </p>
+        </section>
+
+        <section>
+            <h2>Sample Code</h2>
+            <p>
+                The tent function is one of the most complex parts of the project. It stores
+                tent colors and layout values, then uses a loop to draw several tents with
+                different positions, sizes, and colors.
+            </p>
+            <pre class="code-sample"><code>def tent(number_of_tents=1):
+    """Draw one or more tents with varied layouts and cycling colors."""
+    t = turtle.getturtle()
+    tent_colors = ["brown", "red", "orange", "olivedrab"]
+    tent_layouts = [
+        (-230, -120, 150),
+        (-30, -150, 120),
+        (145, -185, 95),
+        (-360, -170, 110),
+        (270, -160, 105),
+    ]
+
+    for i in range(number_of_tents):
+        x, y, size = tent_layouts[i % len(tent_layouts)]
+        peak_height = size * math.sqrt(3) / 2
+        y = min(y, -peak_height)
+
+        jump_to(t, x, y)
+        draw_triangle(t, size, fill_color=tent_colors[i % len(tent_colors)])</code></pre>
+        </section>
+
+        <section>
+            <h2>Final Scene</h2>
+            <p>
+                The finished scene combines the refactored functions into one composition
+                with hills, grass, a river, flowers, clouds, a sun, and several tents.
+            </p>
+            <img class="scene-image" src="project3.2_image.jpg" alt="Python Turtle camping scene with hills, clouds, sun, flowers, river, and tents">
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lorissa Hughes. Featured project for CS110.</p>
+    </footer>
+</body>
+</html>

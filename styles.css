@@ -1,0 +1,633 @@
+/* Lorissa H. */
+/* Final project stylesheet: minimalist, professional, with PNW-inspired accents. */
+
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap");
+
+/* Reset the browser defaults so spacing is predictable across the whole page. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main color palette for the page. */
+:root {
+    --page: #f7f7f2;
+    --surface: rgba(255, 255, 250, 0.96);
+    --surface-strong: #ffffff;
+    --text: #252a27;
+    --muted: #56615b;
+    --line: #cfd8cf;
+    --green: #2f5d4a;
+    --green-dark: #17382b;
+    --green-soft: #e4eee8;
+    --moss: #8a9a5b;
+    --shadow: 0 14px 34px rgba(31, 63, 50, 0.12);
+    --shadow-soft: 0 8px 22px rgba(31, 63, 50, 0.09);
+}
+
+/* Enables smooth scrolling for in-page links. */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Sets the main page width, typography, and background color. */
+body {
+    min-height: 100vh;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 48px 28px;
+    position: relative;
+    font-family: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.28rem;
+    font-weight: 500;
+    line-height: 1.62;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top left, rgba(228, 238, 232, 0.9), transparent 34rem),
+        linear-gradient(180deg, #fbfbf7 0%, var(--page) 100%);
+}
+
+/* Adds the transparent redwoods background image behind the content. */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(247, 247, 242, 0.66), rgba(247, 247, 242, 0.88)),
+        url("redwoods-background.png");
+    background-position: center;
+    background-size: cover;
+    opacity: 0.95;
+    z-index: -1;
+}
+
+/* Gives the major page areas a light panel effect so the text stays readable. */
+header,
+footer {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(4px);
+}
+
+/* Styles the top introduction area. */
+header {
+    padding: 50px 56px 42px;
+    border-bottom: 5px solid var(--green);
+}
+
+/* Places intro text and profile photo side by side on larger screens. */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+/* Allows the intro text to take up the available space next to the image. */
+.profile-text {
+    flex: 1;
+}
+
+/* Keeps the profile picture consistently sized and cropped. */
+.profile-photo {
+    width: 190px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 24px;
+    border: 4px solid var(--surface-strong);
+    box-shadow: 0 0 0 1px var(--line);
+}
+
+/* Keeps email and phone links grouped without crowding them. */
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin-bottom: 0;
+}
+
+/* Slightly sizes down the contact links so they do not overpower the header. */
+.contact-links a {
+    font-size: 0.98rem;
+}
+
+/* Creates space between the header and the individual content sections. */
+main {
+    display: grid;
+    gap: 18px;
+    margin-top: 24px;
+}
+
+/* Keeps the footer simple and secondary. */
+footer {
+    margin-top: 24px;
+    padding: 24px 56px;
+    color: var(--muted);
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+/* Shared heading style for a consistent hierarchy. */
+h1,
+h2,
+h3 {
+    line-height: 1.2;
+    color: var(--green-dark);
+    font-weight: 750;
+}
+
+/* Main name heading in the header. */
+h1 {
+    font-size: 3.3rem;
+    margin-bottom: 10px;
+    letter-spacing: 0;
+}
+
+/* Section headings for each major part of the page. */
+h2 {
+    margin: 38px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    font-size: 1.85rem;
+}
+
+/* Small moss dot detail before section headings. */
+h2::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: var(--moss);
+    vertical-align: 0.16em;
+}
+
+/* Subheadings for schools, jobs, and projects. */
+h3 {
+    margin: 24px 0 8px;
+    font-size: 1.28rem;
+}
+
+/* Subtle divider under the header intro. */
+hr {
+    width: 100%;
+    max-width: 420px;
+    margin: 20px 0 14px;
+    border: 0;
+    border-top: 1px solid var(--line);
+}
+
+/* Standard paragraph spacing. */
+p {
+    margin-bottom: 16px;
+}
+
+/* Link styling with a quiet green accent. */
+a {
+    color: var(--green);
+    font-weight: 600;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgba(47, 93, 74, 0.62);
+    text-underline-offset: 4px;
+}
+
+/* Makes links feel interactive when hovered or focused. */
+a:hover,
+a:focus {
+    color: var(--green-dark);
+    text-decoration-color: var(--green-dark);
+}
+
+/* Navigation styling for an optional menu. */
+nav {
+    margin-top: 24px;
+}
+
+/* Keeps navigation links in a flexible row. */
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+}
+
+/* Makes nav links look like clean, small buttons. */
+nav a {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface-strong);
+    color: var(--green-dark);
+    text-decoration: none;
+}
+
+/* Adds a soft green hover effect to nav links. */
+nav a:hover,
+nav a:focus {
+    border-color: var(--green);
+    background: var(--green-soft);
+}
+
+/* Adds breathing room inside each content section while softly showing the background around it. */
+section {
+    padding: 34px 56px 38px;
+    border: 1px solid rgba(207, 216, 207, 0.9);
+    border-radius: 22px;
+    background: rgba(255, 255, 250, 0.93);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(4px);
+}
+
+/* Keeps the first heading in each section from adding extra top space. */
+section h2:first-child {
+    margin-top: 0;
+}
+
+/* Sets consistent spacing for both ordered and unordered lists. */
+ul,
+ol {
+    margin: 0 0 16px 24px;
+}
+
+/* Keeps list items readable instead of cramped. */
+li {
+    margin-bottom: 8px;
+}
+
+/* Makes images responsive so they do not overflow on small screens. */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+}
+
+/* Optional blockquote styling for quotes or callouts. */
+blockquote {
+    margin: 20px 0;
+    padding: 14px 18px;
+    border-left: 4px solid var(--green);
+    border-radius: 10px;
+    background: var(--green-soft);
+    color: var(--green-dark);
+}
+
+/* Table styling for structured information. */
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface-strong);
+}
+
+/* Keeps table cells readable and aligned. */
+th,
+td {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+}
+
+/* Highlights table headers with the soft green accent. */
+th {
+    color: var(--green-dark);
+    background: var(--green-soft);
+}
+
+/* Shared styling for buttons and button-like links. */
+button,
+.button {
+    display: inline-block;
+    padding: 11px 18px;
+    border: 1px solid var(--green);
+    border-radius: 999px;
+    background: var(--green);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Darkens buttons on hover/focus for clearer interaction feedback. */
+button:hover,
+button:focus,
+.button:hover,
+.button:focus {
+    background: var(--green-dark);
+    border-color: var(--green-dark);
+}
+
+/* Intro/subtitle text should feel quieter than the main heading. */
+.intro,
+.subtitle {
+    max-width: 760px;
+    color: var(--muted);
+    font-size: 1.32rem;
+}
+
+/* Small highlight style for key phrases. */
+.highlight {
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--green-soft);
+    color: var(--green-dark);
+    font-weight: 650;
+}
+
+/* Simple card style for repeated content blocks. */
+.card {
+    margin: 18px 0;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface-strong);
+}
+
+/* Organizes featured projects across the page. */
+.featured-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+/* Keeps featured project entries distinct without making them feel heavy. */
+.featured-project {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.76);
+    box-shadow: 0 8px 18px rgba(31, 63, 50, 0.08);
+}
+
+/* Keeps project titles compact inside the horizontal layout. */
+.featured-project h3 {
+    margin-top: 0;
+    color: var(--green-dark);
+    font-size: 1.45rem;
+    font-weight: 800;
+}
+
+/* Pushes each project button to the bottom of its block. */
+.featured-project .button {
+    align-self: center;
+    margin-top: auto;
+}
+
+/* Secondary details like dates and locations. */
+.details {
+    color: var(--muted);
+    font-size: 1.02rem;
+}
+
+/* Project detail pages use the same panels with focused code examples. */
+.project-page {
+    display: block;
+}
+
+.project-page section {
+    margin-top: 20px;
+}
+
+.project-nav {
+    margin: 0 0 18px;
+}
+
+.code-sample {
+    overflow-x: auto;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #1f2a24;
+    color: #f4f7f1;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Keeps project screenshots polished and full-width. */
+.scene-image {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-soft);
+}
+
+/* Pairs project takeaways with supporting visuals when a notebook has one. */
+.takeaway-plot {
+    margin: 18px 0;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.58);
+}
+
+.takeaway-plot p {
+    margin-bottom: 12px;
+}
+
+.takeaway-plot h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.takeaway-plot img {
+    display: block;
+    width: 100%;
+    background: #ffffff;
+}
+
+/* Gives standalone graphs their own rounded visual container. */
+.graph-bubble {
+    margin: 16px 0 24px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 8px 18px rgba(31, 63, 50, 0.08);
+}
+
+.graph-bubble img {
+    display: block;
+    width: 100%;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+/* Highlights compact code snippets and numeric results on project pages. */
+.result-bubble {
+    margin: 16px 0 24px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 8px 18px rgba(31, 63, 50, 0.08);
+}
+
+.result-bubble pre {
+    overflow-x: auto;
+    margin-bottom: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    background: #1f2a24;
+    color: #f4f7f1;
+    font-size: 0.98rem;
+    line-height: 1.45;
+}
+
+.result-line {
+    margin-bottom: 6px;
+    color: var(--green-dark);
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.note {
+    color: var(--muted);
+    font-size: 0.96rem;
+}
+
+/* Full notebook exports keep cells readable inside the site design. */
+.notebook-cell {
+    margin-top: 20px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: rgba(255, 255, 250, 0.93);
+    box-shadow: var(--shadow-soft);
+}
+
+.notebook-cell h1,
+.notebook-cell h2,
+.notebook-cell h3,
+.notebook-cell h4 {
+    margin-top: 0;
+}
+
+.cell-label {
+    margin-bottom: 8px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.notebook-output {
+    overflow-x: auto;
+    margin-top: 12px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-strong);
+    color: var(--text);
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
+.notebook-plot {
+    display: block;
+    max-width: 100%;
+    margin-top: 14px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: #ffffff;
+}
+
+.notebook-html-output {
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+/* Mobile layout adjustments so the page still works on phones. */
+@media (max-width: 700px) {
+    /* Reduces the outer page padding on smaller screens. */
+    body {
+        padding: 22px 14px;
+        font-size: 1.15rem;
+    }
+
+    /* Keeps the main panels from feeling too tight on mobile. */
+    header,
+    footer {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    /* Reduces section padding on smaller screens. */
+    section {
+        padding: 26px 22px 28px;
+    }
+
+    /* Stacks featured projects so they stay readable on narrow screens. */
+    .featured-projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Stacks the intro text and profile photo on narrow screens. */
+    .profile-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    /* Makes the profile photo smaller on mobile. */
+    .profile-photo {
+        width: 136px;
+    }
+
+    /* Stacks contact links so they are easy to tap. */
+    .contact-links {
+        display: block;
+    }
+
+    /* Adds space between stacked contact links. */
+    .contact-links a {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    /* Scales the main heading down on mobile. */
+    h1 {
+        font-size: 2.45rem;
+    }
+
+    h2 {
+        font-size: 1.55rem;
+    }
+
+    h3 {
+        font-size: 1.18rem;
+    }
+
+    /* Stacks nav links on small screens. */
+    nav ul {
+        display: block;
+    }
+
+    /* Adds spacing between stacked nav list items. */
+    nav li {
+        margin-bottom: 8px;
+    }
+
+    /* Makes nav links full width for easier tapping. */
+    nav a {
+        width: 100%;
+    }
+}

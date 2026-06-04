@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Habits Analysis - Full Notebook</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <p class="project-nav"><a href="../project8.html" title="Return to Lorissa Hughes resume">Back to Resume</a></p>
+        <h1>Student Habits Analysis - Full Notebook</h1>
+        <p class="subtitle">Full notebook export with code cells and saved outputs.</p>
+    </header>
+
+    <main class="project-page full-notebook">
+        <article class="notebook-cell markdown-cell"><h1>Lorissa Hughes</h1></article><article class="notebook-cell markdown-cell"><h1>Project 7: Student Habits vs Academic Performance Analysis</h1></article><article class="notebook-cell markdown-cell"><h4>Overview</h4></article><article class="notebook-cell markdown-cell"><p>This project analyzes the relationship between student lifestyle habits and academic performance using a comprehensive dataset from Kaggle. The dataset contains information about 1,000 students and includes 16 variables covering various aspects of student life, including study habits, social media usage, sleep patterns, diet quality, exercise frequency, and academic outcomes.</p>
+<p>The analysis focuses on understanding how different study patterns correlate with exam performance.The project demonstrates fundamental data analysis skills including data cleaning, statistical calculations, and comparative analysis using Python and pandas.</p></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 1</div><pre class="code-sample"><code># Install dependencies as needed:
+# pip install kagglehub[pandas-datasets]
+import kagglehub
+from kagglehub import KaggleDatasetAdapter
+
+# Set the path to the file you&#x27;d like to load
+# Update file_path to point to the specific file within the dataset
+file_path = &quot;student_habits_performance.csv&quot;
+
+# Load the latest version
+df = kagglehub.load_dataset(
+  KaggleDatasetAdapter.PANDAS,
+  &quot;jayaantanaath/student-habits-vs-academic-performance&quot;,
+  file_path,
+  # Provide any additional arguments like
+  # sql_query or pandas_kwargs. See the
+  # documenation for more information:
+  # https://github.com/Kaggle/kagglehub/blob/main/README.md#kaggledatasetadapterpandas
+)
+
+print(&quot;First 5 records:&quot;, df.head())</code></pre><pre class="notebook-output">/tmp/ipykernel_6544/3453289196.py:11: DeprecationWarning: Use dataset_load() instead of load_dataset(). load_dataset() will be removed in a future version.
+  df = kagglehub.load_dataset(
+</pre>
+<pre class="notebook-output">Using Colab cache for faster access to the &#x27;student-habits-vs-academic-performance&#x27; dataset.
+First 5 records:   student_id  age  gender  study_hours_per_day  social_media_hours  \
+0      S1000   23  Female                  0.0                 1.2   
+1      S1001   20  Female                  6.9                 2.8   
+2      S1002   21    Male                  1.4                 3.1   
+3      S1003   23  Female                  1.0                 3.9   
+4      S1004   19  Female                  5.0                 4.4   
+
+   netflix_hours part_time_job  attendance_percentage  sleep_hours  \
+0            1.1            No                   85.0          8.0   
+1            2.3            No                   97.3          4.6   
+2            1.3            No                   94.8          8.0   
+3            1.0            No                   71.0          9.2   
+4            0.5            No                   90.9          4.9   
+
+  diet_quality  exercise_frequency parental_education_level internet_quality  \
+0         Fair                   6                   Master          Average   
+1         Good                   6              High School          Average   
+2         Poor                   1              High School             Poor   
+3         Poor                   4                   Master             Good   
+4         Fair                   3                   Master             Good   
+
+   mental_health_rating extracurricular_participation  exam_score  
+0                     8                           Yes        56.2  
+1                     8                            No       100.0  
+2                     1                            No        34.3  
+3                     1                           Yes        26.8  
+4                     1                            No        66.4  
+</pre></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 2</div><pre class="code-sample"><code>one_col = df[&#x27;age&#x27;]</code></pre></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 3</div><pre class="code-sample"><code>type(one_col)</code></pre><div class="notebook-html-output"><div style="max-width:800px; border: 1px solid var(--colab-border-color);"><style>
+      pre.function-repr-contents {
+        overflow-x: auto;
+        padding: 8px 12px;
+        max-height: 500px;
+      }
+
+      pre.function-repr-contents.function-repr-contents-collapsed {
+        cursor: pointer;
+        max-height: 100px;
+      }
+    </style>
+    <pre style="white-space: initial; background:
+         var(--colab-secondary-surface-color); padding: 8px 12px;
+         border-bottom: 1px solid var(--colab-border-color);"><b>pandas.core.series.Series</b><br/>def __init__(data=None, index=None, dtype: Dtype | None=None, name=None, copy: bool | None=None, fastpath: bool | lib.NoDefault=lib.no_default) -&gt; None</pre><pre class="function-repr-contents function-repr-contents-collapsed" style=""><a class="filepath" style="display:none" href="#">/usr/local/lib/python3.12/dist-packages/pandas/core/series.py</a>One-dimensional ndarray with axis labels (including time series).
+
+Labels need not be unique but must be a hashable type. The object
+supports both integer- and label-based indexing and provides a host of
+methods for performing operations involving the index. Statistical
+methods from ndarray have been overridden to automatically exclude
+missing data (currently represented as NaN).
+
+Operations between Series (+, -, /, \*, \*\*) align values based on their
+associated index values-- they need not be the same length. The result
+index will be the sorted union of the two indexes.
+
+Parameters
+----------
+data : array-like, Iterable, dict, or scalar value
+    Contains data stored in Series. If data is a dict, argument order is
+    maintained.
+index : array-like or Index (1d)
+    Values must be hashable and have the same length as `data`.
+    Non-unique index values are allowed. Will default to
+    RangeIndex (0, 1, 2, ..., n) if not provided. If data is dict-like
+    and index is None, then the keys in the data are used as the index. If the
+    index is not None, the resulting Series is reindexed with the index values.
+dtype : str, numpy.dtype, or ExtensionDtype, optional
+    Data type for the output Series. If not specified, this will be
+    inferred from `data`.
+    See the :ref:`user guide &lt;basics.dtypes&gt;` for more usages.
+name : Hashable, default None
+    The name to give to the Series.
+copy : bool, default False
+    Copy input data. Only affects Series or 1d ndarray input. See examples.
+
+Notes
+-----
+Please reference the :ref:`User Guide &lt;basics.series&gt;` for more information.
+
+Examples
+--------
+Constructing Series from a dictionary with an Index specified
+
+&gt;&gt;&gt; d = {&#x27;a&#x27;: 1, &#x27;b&#x27;: 2, &#x27;c&#x27;: 3}
+&gt;&gt;&gt; ser = pd.Series(data=d, index=[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;])
+&gt;&gt;&gt; ser
+a   1
+b   2
+c   3
+dtype: int64
+
+The keys of the dictionary match with the Index values, hence the Index
+values have no effect.
+
+&gt;&gt;&gt; d = {&#x27;a&#x27;: 1, &#x27;b&#x27;: 2, &#x27;c&#x27;: 3}
+&gt;&gt;&gt; ser = pd.Series(data=d, index=[&#x27;x&#x27;, &#x27;y&#x27;, &#x27;z&#x27;])
+&gt;&gt;&gt; ser
+x   NaN
+y   NaN
+z   NaN
+dtype: float64
+
+Note that the Index is first build with the keys from the dictionary.
+After this the Series is reindexed with the given Index values, hence we
+get all NaN as a result.
+
+Constructing Series from a list with `copy=False`.
+
+&gt;&gt;&gt; r = [1, 2]
+&gt;&gt;&gt; ser = pd.Series(r, copy=False)
+&gt;&gt;&gt; ser.iloc[0] = 999
+&gt;&gt;&gt; r
+[1, 2]
+&gt;&gt;&gt; ser
+0    999
+1      2
+dtype: int64
+
+Due to input data type the Series has a `copy` of
+the original data even though `copy=False`, so
+the data is unchanged.
+
+Constructing Series from a 1d ndarray with `copy=False`.
+
+&gt;&gt;&gt; r = np.array([1, 2])
+&gt;&gt;&gt; ser = pd.Series(r, copy=False)
+&gt;&gt;&gt; ser.iloc[0] = 999
+&gt;&gt;&gt; r
+array([999,   2])
+&gt;&gt;&gt; ser
+0    999
+1      2
+dtype: int64
+
+Due to input data type the Series has a `view` on
+the original data, so
+the data is changed as well.</pre>
+      <script>
+      if (google.colab.kernel.accessAllowed && google.colab.files && google.colab.files.view) {
+        for (const element of document.querySelectorAll('.filepath')) {
+          element.style.display = 'block'
+          element.onclick = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            google.colab.files.view(element.textContent, 263);
+          };
+        }
+      }
+      for (const element of document.querySelectorAll('.function-repr-contents')) {
+        element.onclick = (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          element.classList.toggle('function-repr-contents-collapsed');
+        };
+      }
+      </script>
+      </div></div></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 4</div><pre class="code-sample"><code>df.info()</code></pre><pre class="notebook-output">&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;
+RangeIndex: 1000 entries, 0 to 999
+Data columns (total 16 columns):
+ #   Column                         Non-Null Count  Dtype  
+---  ------                         --------------  -----  
+ 0   student_id                     1000 non-null   object 
+ 1   age                            1000 non-null   int64  
+ 2   gender                         1000 non-null   object 
+ 3   study_hours_per_day            1000 non-null   float64
+ 4   social_media_hours             1000 non-null   float64
+ 5   netflix_hours                  1000 non-null   float64
+ 6   part_time_job                  1000 non-null   object 
+ 7   attendance_percentage          1000 non-null   float64
+ 8   sleep_hours                    1000 non-null   float64
+ 9   diet_quality                   1000 non-null   object 
+ 10  exercise_frequency             1000 non-null   int64  
+ 11  parental_education_level       909 non-null    object 
+ 12  internet_quality               1000 non-null   object 
+ 13  mental_health_rating           1000 non-null   int64  
+ 14  extracurricular_participation  1000 non-null   object 
+ 15  exam_score                     1000 non-null   float64
+dtypes: float64(6), int64(3), object(7)
+memory usage: 125.1+ KB
+</pre></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 5</div><pre class="code-sample"><code>df.shape</code></pre><pre class="notebook-output">(1000, 16)</pre></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 6</div><pre class="code-sample"><code>df.columns</code></pre><pre class="notebook-output">Index([&#x27;student_id&#x27;, &#x27;age&#x27;, &#x27;gender&#x27;, &#x27;study_hours_per_day&#x27;,
+       &#x27;social_media_hours&#x27;, &#x27;netflix_hours&#x27;, &#x27;part_time_job&#x27;,
+       &#x27;attendance_percentage&#x27;, &#x27;sleep_hours&#x27;, &#x27;diet_quality&#x27;,
+       &#x27;exercise_frequency&#x27;, &#x27;parental_education_level&#x27;, &#x27;internet_quality&#x27;,
+       &#x27;mental_health_rating&#x27;, &#x27;extracurricular_participation&#x27;, &#x27;exam_score&#x27;],
+      dtype=&#x27;object&#x27;)</pre></article><article class="notebook-cell markdown-cell"><h3>clean the data</h3></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 7</div><pre class="code-sample"><code>df.isnull().sum()</code></pre><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>student_id</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>age</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>gender</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>study_hours_per_day</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>social_media_hours</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>netflix_hours</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>part_time_job</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>attendance_percentage</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>sleep_hours</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>diet_quality</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>exercise_frequency</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>parental_education_level</th>
+      <td>91</td>
+    </tr>
+    <tr>
+      <th>internet_quality</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>mental_health_rating</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>extracurricular_participation</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>exam_score</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div><br><label><b>dtype:</b> int64</label></div></article><article class="notebook-cell markdown-cell"><p>This checks how many missing (NaN) values are in each column of the DataFrame. Based on the output:</p>
+<p>All columns have 0 missing values except for parental_education_level, which has 91 missing values.</p></article><article class="notebook-cell markdown-cell"><p>The dataset is mostly clean, but you do need to clean or handle the missing data in the parental_education_level column.</p></article><article class="notebook-cell markdown-cell"><h4>Fill with a default or common value</h4></article><article class="notebook-cell markdown-cell"><h4>drop rows with missing values</h4></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 8</div><pre class="code-sample"><code>df.dropna(subset=[&#x27;parental_education_level&#x27;], inplace=True)
+</code></pre></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 9</div><pre class="code-sample"><code># checking the data again
+df.isnull().sum()</code></pre><div class="notebook-html-output"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>student_id</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>age</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>gender</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>study_hours_per_day</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>social_media_hours</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>netflix_hours</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>part_time_job</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>attendance_percentage</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>sleep_hours</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>diet_quality</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>exercise_frequency</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>parental_education_level</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>internet_quality</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>mental_health_rating</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>extracurricular_participation</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>exam_score</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div><br><label><b>dtype:</b> int64</label></div></article><article class="notebook-cell markdown-cell"><h3>Questions to Answer</h3>
+<p>Please find the answer for the following questoins.</p></article><article class="notebook-cell markdown-cell"><ol>
+<li>Find the average study hours per day for all students. Please create a code cell below this to answer the question.(0.5 point)</li>
+</ol></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 10</div><pre class="code-sample"><code># Calculate the average study hours per day for all students.
+average_study_hours = df[&#x27;study_hours_per_day&#x27;].mean()
+print(f&quot;Average study hours per day for all students: {average_study_hours:.2f}&quot;)</code></pre><pre class="notebook-output">Average study hours per day for all students: 3.54
+</pre></article><article class="notebook-cell markdown-cell"><ol>
+<li>Identify the student who studies MOST hours per day. Please create a code cell below to answer the question.(0.5 point)</li>
+</ol></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 11</div><pre class="code-sample"><code># Find the maximum study hours per day among all students
+max_study_hours = df[&#x27;study_hours_per_day&#x27;].max()
+
+# Filter the DataFrame to get the student(s) who study the most hours
+# And select only the &#x27;student_id&#x27; and &#x27;study_hours_per_day&#x27; columns
+student_most_hours = df[df[&#x27;study_hours_per_day&#x27;] == max_study_hours][[&#x27;student_id&#x27;, &#x27;study_hours_per_day&#x27;]]
+
+# Print a descriptive header and display the resulting DataFrame
+print(&quot;Student(s) who studies the MOST hours per day:&quot;)
+display(student_most_hours)</code></pre><pre class="notebook-output">Student(s) who studies the MOST hours per day:
+</pre>
+<div class="notebook-html-output">
+  <div id="df-c111fb8e-8013-4e61-9e36-bcc4a748fe27" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>study_hours_per_day</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>455</th>
+      <td>S1455</td>
+      <td>8.3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-c111fb8e-8013-4e61-9e36-bcc4a748fe27')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-c111fb8e-8013-4e61-9e36-bcc4a748fe27 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-c111fb8e-8013-4e61-9e36-bcc4a748fe27');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+  <div id="id_3953dfbb-73a9-4a1d-a3b7-46fbec16c274">
+    <style>
+      .colab-df-generate {
+        background-color: #E8F0FE;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        fill: #1967D2;
+        height: 32px;
+        padding: 0 0 0 0;
+        width: 32px;
+      }
+
+      .colab-df-generate:hover {
+        background-color: #E2EBFA;
+        box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+        fill: #174EA6;
+      }
+
+      [theme=dark] .colab-df-generate {
+        background-color: #3B4455;
+        fill: #D2E3FC;
+      }
+
+      [theme=dark] .colab-df-generate:hover {
+        background-color: #434B5C;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+        fill: #FFFFFF;
+      }
+    </style>
+    <button class="colab-df-generate" onclick="generateWithVariable('student_most_hours')"
+            title="Generate code using this dataframe."
+            style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"/>
+  </svg>
+    </button>
+    <script>
+      (() => {
+      const buttonEl =
+        document.querySelector('#id_3953dfbb-73a9-4a1d-a3b7-46fbec16c274 button.colab-df-generate');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      buttonEl.onclick = () => {
+        google.colab.notebook.generateWithVariable('student_most_hours');
+      }
+      })();
+    </script>
+  </div>
+
+    </div>
+  </div>
+</div></article><article class="notebook-cell markdown-cell"><ol>
+<li>Count how many students study more than 6 hours per day. Please create a code cell below this to answer the question.(0.5 point)</li>
+</ol></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 12</div><pre class="code-sample"><code># Count the number of students who study more than 6 hours per day
+count_over_6 = (df[&#x27;study_hours_per_day&#x27;] &gt; 6).sum()
+print(f&quot;Number of students who study more than 6 hours per day : {count_over_6}&quot;)</code></pre><pre class="notebook-output">Number of students who study more than 6 hours per day : 40
+</pre></article><article class="notebook-cell markdown-cell"><ol>
+<li>What is the percentage of students who study more than 6 hours per day. Please create a code cell below this to answer the question.(0.5 point)</li>
+</ol></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 13</div><pre class="code-sample"><code># Get the total number of students in the DataFrame
+total_students = df.shape[0]
+# Calculate the percentage of students who study more than 6 hours per day
+# &#x27;count_over_6&#x27; is defined in a previous cell
+percentage_more_than_6_hours = (count_over_6 / total_students) * 100
+# Print the calculated percentage, formatted to two decimal places
+print(f&quot;Percentage of students who study more than 6 hours per day: {percentage_more_than_6_hours:.2f}%&quot;)</code></pre><pre class="notebook-output">Percentage of students who study more than 6 hours per day: 4.40%
+</pre></article><article class="notebook-cell markdown-cell"><ol>
+<li>Calculate what percentage of students study less than 2 hours per day. Please create a code cell below this to answer the question.(0.5 point)</li>
+</ol></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 14</div><pre class="code-sample"><code># Count the number of students who study less than 2 hours per day
+count_less_than_2 = (df[&#x27;study_hours_per_day&#x27;] &lt; 2).sum()
+# Calculate the percentage of students who study less than 2 hours per day
+percentage_less_than_2_hours = (count_less_than_2 / total_students) * 100
+# Print the calculated percentage, formatted to two decimal places
+print(f&quot;Percentage of students who study less than 2 hours per day: {percentage_less_than_2_hours:.2f}%&quot;)</code></pre><pre class="notebook-output">Percentage of students who study less than 2 hours per day: 13.53%
+</pre></article><article class="notebook-cell markdown-cell"><ol>
+<li>Do students who study more than 5 hours per day have higher exam scores on average? Please create a code cell below to answer this question. (0.5 point)</li>
+</ol></article><article class="notebook-cell code-cell"><div class="cell-label">Code Cell 15</div><pre class="code-sample"><code># Calculate the average exam score for students studying more than 5 hours per day
+average_exam_score_more_than_5 = df[df[&#x27;study_hours_per_day&#x27;] &gt; 5][&#x27;exam_score&#x27;].mean()
+# Calculate the average exam score for students studying 5 hours per day or less
+average_exam_score_5_or_less = df[df[&#x27;study_hours_per_day&#x27;] &lt;= 5][&#x27;exam_score&#x27;].mean()
+
+# Print the average exam score for students studying more than 5 hours per day, formatted to two decimal places
+print(f&quot;Average exam score for students studying more than 5 hours/day: {average_exam_score_more_than_5:.2f}&quot;)
+# Print the average exam score for students studying 5 hours per day or less, formatted to two decimal places
+print(f&quot;Average exam score for students studying 5 hours/day or less: {average_exam_score_5_or_less:.2f}&quot;)</code></pre><pre class="notebook-output">Average exam score for students studying more than 5 hours/day: 91.12
+Average exam score for students studying 5 hours/day or less: 65.67
+</pre></article><article class="notebook-cell markdown-cell"><p>Students who study more than 5 hours per day had higher average exam scores.</p></article><article class="notebook-cell markdown-cell"><ol>
+<li>Use &quot;Explain code&quot; for the code you produced for Question 6 and summarize in your own words to show that you understood the code Gemini produced. Please create a text cell below to answer this question. (0.5 point)</li>
+</ol></article><article class="notebook-cell markdown-cell"><p>For average_exam_score_more-than_5, the data frame is filtered for students who study more than 5 hours/day and then the mean is calculated for exam_score. For average_exam_score_5_or_less, the same chained operation is carried out, but it first filters for study hours per day less than or equal to 5. Then, two lines are printed to display the findings.</p></article><article class="notebook-cell markdown-cell"><ol>
+<li>The codes produced to answer the questions use &quot;vectorization&quot;? Please justify your answer with an example. Please create a text cell below to answer this question. (0.5 point)</li>
+</ol></article><article class="notebook-cell markdown-cell"><p>The code utilizes vectorization to answer the questions. For example, to filter the DataFrame for question 6, the code df[&#x27;study_hours_per_day&#x27;] &gt; 5 applies the &gt; comparision to every single value in the column simultaneously. The result is a series of True/False values, which are then used to the filer the DataFrame with another vectorized operation.</p></article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lorissa Hughes. Full CS110 notebook export.</p>
+    </footer>
+</body>
+</html>

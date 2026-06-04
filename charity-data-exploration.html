@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity Data Exploration</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <p class="project-nav"><a href="../project8.html" title="Return to Lorissa Hughes resume">Back to Resume</a></p>
+        <h1>Charity Data Exploration</h1>
+        <p class="subtitle">A Python data analysis project exploring fundraising efficiency among Forbes top 100 charities.</p>
+    </header>
+
+    <main class="project-page">
+        <section>
+            <h2>About the Project</h2>
+            <p>
+                This notebook uses pandas, matplotlib, and seaborn to clean and explore a
+                real-world charity dataset from Kaggle. The guiding question is: what factors
+                are associated with efficient fundraising?
+            </p>
+        </section>
+
+        <section>
+            <h2>Featured Code</h2>
+            <p>
+                The project required converting financial strings, such as dollar amounts in
+                millions or billions, into numeric values before analysis and visualization.
+            </p>
+            <pre class="code-sample"><code>def clean_and_convert_financial(series):
+    series = series.replace('Na', float('NaN'))
+    series = series.astype(str).str.replace('$', '', regex=False)
+    series = series.str.replace(',', '', regex=False).str.replace(' ', '', regex=False)
+
+    def convert_to_numeric(value):
+        if isinstance(value, str):
+            value = value.upper()
+            if 'B' in value:
+                return float(value.replace('B', '')) * 1_000_000_000
+            elif 'M' in value:
+                return float(value.replace('M', '')) * 1_000_000
+            elif '%' in value:
+                return float(value.replace('%', ''))
+        try:
+            return float(value)
+        except (ValueError, TypeError):
+            return float('NaN')
+
+    return series.apply(convert_to_numeric)</code></pre>
+        </section>
+
+        <section>
+            <h2>Key Takeaways</h2>
+            <h3>Fundraising Efficiency Was Generally High</h3>
+            <p>
+                The distribution shows that most organizations clustered near the upper
+                end of the fundraising efficiency range.
+            </p>
+            <div class="graph-bubble">
+                <img src="project6-fundraising-efficiency-distribution.png" alt="Histogram showing the distribution of fundraising efficiency percentages">
+            </div>
+
+            <h3>Donor Dependency Was Not a Clear Predictor</h3>
+            <p>
+                The scatterplot does not show a strong visual relationship between donor
+                dependency and fundraising efficiency.
+            </p>
+            <div class="graph-bubble">
+                <img src="project6-donor-dependency-scatter.png" alt="Scatterplot comparing fundraising efficiency and donor dependency by charity category">
+            </div>
+            <p class="project-actions">
+                <a class="button" href="project6-full-notebook.html" title="Open the full Charity Data Exploration notebook with outputs">Open Full Notebook</a>
+                <a class="button" href="project6-2.ipynb" title="Open the raw Charity Data Exploration notebook file">Raw Notebook</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lorissa Hughes. Featured project for CS110.</p>
+    </footer>
+</body>
+</html>
