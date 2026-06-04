@@ -39,9 +39,9 @@ body {
     padding: 48px 28px;
     position: relative;
     font-family: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
-    font-size: 1.28rem;
-    font-weight: 500;
-    line-height: 1.62;
+    font-size: 1.16rem;
+    font-weight: 400;
+    line-height: 1.66;
     color: var(--text);
     background:
         radial-gradient(circle at top left, rgba(228, 238, 232, 0.9), transparent 34rem),
@@ -310,7 +310,7 @@ button,
     display: inline-block;
     padding: 11px 18px;
     border: 1px solid var(--green);
-    border-radius: 999px;
+    border-radius: 10px;
     background: var(--green);
     color: #ffffff;
     font: inherit;
@@ -333,7 +333,7 @@ button:focus,
 .subtitle {
     max-width: 760px;
     color: var(--muted);
-    font-size: 1.32rem;
+    font-size: 1.18rem;
 }
 
 /* Small highlight style for key phrases. */
@@ -560,7 +560,7 @@ button:focus,
     /* Reduces the outer page padding on smaller screens. */
     body {
         padding: 22px 14px;
-        font-size: 1.15rem;
+        font-size: 1.08rem;
     }
 
     /* Keeps the main panels from feeling too tight on mobile. */
