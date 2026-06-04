@@ -1,8 +1,6 @@
 /* Lorissa H. */
 /* Final project stylesheet: minimalist, professional, with PNW-inspired accents. */
 
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap");
-
 /* Reset the browser defaults so spacing is predictable across the whole page. */
 * {
     margin: 0;
@@ -38,8 +36,8 @@ body {
     margin: 0 auto;
     padding: 48px 28px;
     position: relative;
-    font-family: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
-    font-size: 1.16rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
     font-weight: 400;
     line-height: 1.66;
     color: var(--text);
@@ -333,7 +331,7 @@ button:focus,
 .subtitle {
     max-width: 760px;
     color: var(--muted);
-    font-size: 1.18rem;
+    font-size: 1.08rem;
 }
 
 /* Small highlight style for key phrases. */
@@ -560,7 +558,7 @@ button:focus,
     /* Reduces the outer page padding on smaller screens. */
     body {
         padding: 22px 14px;
-        font-size: 1.08rem;
+        font-size: 17px;
     }
 
     /* Keeps the main panels from feeling too tight on mobile. */
